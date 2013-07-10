@@ -9,10 +9,10 @@
 #include "GDTranslate.h"
 
 namespace GDTranslate{
-    const char* gt(string key){
+    string gt(string key){
         return GDTranslateClass::get()->translate(key);
     }
-    const char* gt(int key){
+    string gt(int key){
         return GDTranslateClass::get()->translate(key);
     }
     
@@ -33,14 +33,17 @@ namespace GDTranslate{
         {
             string filename = language+".txt";
             
-            std::string fullPath =CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(filename.c_str());
-            
+			
+			
+            std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str()) ;
             unsigned long bufferSize = 0;
             mFileData = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "r", &bufferSize);
             
             if(mFileData!=NULL){
                 string abc = (char *)mFileData;
+				abc = "{" + abc + "}";
                 languageData = GraphDogLib::StringToJsonObject(abc.c_str());
+				delete [] mFileData;
             }
         }
         
@@ -49,14 +52,16 @@ namespace GDTranslate{
         {
             string filename = defaultLanguage+".txt";
             
-            std::string fullPath =CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(filename.c_str());
+            std::string fullPath =CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
+
             unsigned char* mFileData2 = NULL;
             unsigned long bufferSize = 0;
             mFileData2 = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "r", &bufferSize);
             if(mFileData2!=NULL){
                 
                 string abc = (char *)mFileData2;
-                
+				delete [] mFileData2;
+                abc = "{" + abc + "}";
                 //설정된 언어가 없으면 기본언어로 대체
                 if(mFileData==NULL){
                     languageData = GraphDogLib::StringToJsonObject(abc.c_str());
@@ -82,10 +87,10 @@ namespace GDTranslate{
 
 
 
-    const char* GDTranslateClass::translate(string key){
+    string GDTranslateClass::translate(string key){
         //데이터가져오기
         if(isOpenFile==false) getLanguageDataFromFile();
-        
+
         //설정언어에서 값찾기
         {
             string result = languageData[key.c_str()].getString();
@@ -104,7 +109,7 @@ namespace GDTranslate{
         
     }
 
-    const char* GDTranslateClass::translate(int key){
+    string GDTranslateClass::translate(int key){
         char buffer[100];
         sprintf(buffer, "%d",key);
         return translate(buffer);

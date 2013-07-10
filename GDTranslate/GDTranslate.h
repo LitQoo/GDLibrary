@@ -38,8 +38,10 @@
 이설정을 바꾸고 싶으면 GDTranslateClass::get()->setLanguage(언어코드,기본언어코드);
 를 가장 먼저 호출해주면된다.
 */
+#include <string>
 
 using namespace std;
+
 
 
 namespace GDTranslate{
@@ -64,12 +66,12 @@ namespace GDTranslate{
         GDTranslateClass();
         void setDefaultLanguage(string defaultLanguageCode);
         void setLanguage(string languageCode,string defaultLanguageCode);
-        const char* translate(string key);
-        const char* translate(int key);
+        string translate(string key);
+        string translate(int key);
     };
 
-    const char* gt(string key);
-    const char* gt(int key);
+    string gt(string key);
+    string gt(int key);
 }
 
 #endif /* defined(__GDUtility__GDTranslate__) */
