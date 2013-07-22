@@ -122,6 +122,7 @@ CCSprite* GDWebSprite::create(string imgUrl, CCNode *defaultNode, string imageNa
                 ret->setAnchorPoint(CCPointZero);
                 ret->setPosition(CCPointZero);
                 ret->setContentSize(CCSizeMake(ret->getContentSize().width*image->xScale,ret->getContentSize().height*image->yScale));
+                newimg->setContentSize(ret->getContentSize());
                 return (CCSprite *)newimg;
             }
         }
