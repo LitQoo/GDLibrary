@@ -9,3 +9,5 @@ ctest3
 ctest4
 
 ctest5
+
+ctest6
