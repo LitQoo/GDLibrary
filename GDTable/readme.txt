@@ -10,4 +10,6 @@ ctest4
 
 ctest5
 
+ctest6
+
 main7
